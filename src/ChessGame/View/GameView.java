@@ -4,10 +4,7 @@ import ChessGame.Model.*;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -37,6 +34,7 @@ public class GameView
 		
 		chessBoard = new BoardView (thisGame.gameBoard);
 		chessBoard.setBounds (10, 10, 660, 660);
+		chessBoard.setVisible (true);
 		gameWindow.add (chessBoard);
 		
 		newGameBut  = new Button ();
@@ -69,12 +67,17 @@ public class GameView
 	}
 }
 
-class BoardView extends Canvas implements MouseListener
+class BoardView extends Canvas
 {
 	Board modelBoard;
+	boolean isMouseClicked;
+	Point from;
+	Point to;
+	
 	public BoardView (Board mB)
 	{
 		this.modelBoard = mB;
+		isMouseClicked = false;
 	}
 	
 	@Override
@@ -95,6 +98,41 @@ class BoardView extends Canvas implements MouseListener
 		g.drawLine (0, 0, 100, 100);
 		
 		drawPieces (modelBoard, g);
+		
+		this.addMouseListener (new MouseAdapter () {
+			@Override
+			public void mouseClicked (MouseEvent e)
+			{
+				Graphics g = getGraphics ();
+				super.mouseClicked (e);
+				if (isMouseClicked)
+				{
+					to = e.getPoint ();
+					int fromX = (from.x - 20) / 60;
+					int fromY = (from.y - 50) / 60;
+					int toX = (to.x - 20) / 60;
+					int toY = (to.y - 50) / 60;
+					if ( (fromY+9*fromX) % 2 == 0) g.setColor (Color.lightGray);
+					else g.setColor (Color.darkGray);
+					g.fillRect (20 + fromX * 60, 50 + fromY * 60, 60, 60);
+					modelBoard.makeMove (new Move (new Coord (fromX, fromY), new Coord (toX, toY)));
+					drawPieces (modelBoard, g);
+					isMouseClicked = false;
+				}
+				else {
+					g.setColor (Color.green);
+					from = e.getPoint ();
+					int fromX = (from.x - 20) / 60;
+					int fromY = (from.y - 50) / 60;
+					if (modelBoard.isOccupied (new Coord (fromX, fromY)))
+					{
+						g.fillRect (20 + fromX * 60, 50 + fromY * 60, 60, 60);
+						isMouseClicked = true;
+						drawPieces (modelBoard, g);
+					}
+				}
+			}
+		});
 		
 	}
 	
@@ -211,36 +249,7 @@ class BoardView extends Canvas implements MouseListener
 			}
 		}
 	}
-	
-	@Override
-	public void mouseClicked (MouseEvent e)
-	{
-	
-	}
-	
-	@Override
-	public void mousePressed (MouseEvent e)
-	{
-	
-	}
-	
-	@Override
-	public void mouseReleased (MouseEvent e)
-	{
-	
-	}
-	
-	@Override
-	public void mouseEntered (MouseEvent e)
-	{
-	
-	}
-	
-	@Override
-	public void mouseExited (MouseEvent e)
-	{
-	
-	}
+
 }
 
 class WinListener extends WindowAdapter //implements WindowListener

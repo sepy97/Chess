@@ -80,7 +80,7 @@ public class Board
 		for (int i = 0; i < gamePieces.size (); i++)
 		{
 			pieceToMove = gamePieces.get (i);
-			if (pieceToMove.getCoord () == toMake.getFrom ())
+			if (pieceToMove.getCoord ().getX () == toMake.getFrom ().getX () && pieceToMove.getCoord ().getY () == toMake.getFrom ().getY ())
 			{
 				break;
 			}
@@ -100,5 +100,10 @@ public class Board
 		}
 		
 		return true;
+	}
+	
+	public boolean isOccupied (Coord coord)
+	{
+		return (getPiece (coord) != null); //@@@@
 	}
 }

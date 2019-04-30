@@ -9,11 +9,11 @@ public class Square
 		this.coord = coord;
 	}
 	
-	public boolean isOccupied ()
+	/*public boolean isOccupied ()
 	{
 		
 		return false; //@@@@
-	}
+	}*/
 	
 	//public boolean isAttacked -- нужна ли???
 }

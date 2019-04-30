@@ -23,14 +23,14 @@ public class Pawn extends Piece
 				Move ordMove    = new Move (this.coord, new Coord (this.coord.getX (), this.coord.getY () - 1));
 				Square secondSquare = curBoard.getSquare (doubleMove.getDest ());
 				Square firstSquare  = curBoard.getSquare (ordMove.getDest ());
-				if ( !(secondSquare.isOccupied () && curBoard.getPiece (doubleMove.getDest ()).getColor () == PieceColor.BLACK) &&
-					 !(firstSquare.isOccupied ()  && curBoard.getPiece (ordMove.getDest ()).getColor ()    == PieceColor.BLACK)
+				if ( !(curBoard.isOccupied (doubleMove.getDest ()) && curBoard.getPiece (doubleMove.getDest ()).getColor () == PieceColor.BLACK) &&
+					 !(curBoard.isOccupied (ordMove.getDest ())    && curBoard.getPiece (ordMove.getDest ()).getColor ()    == PieceColor.BLACK)
 				   )
 				{
 					validMoves.add (doubleMove);
 				}
 				
-				if (!(firstSquare.isOccupied () && curBoard.getPiece (ordMove.getDest ()).getColor () == PieceColor.BLACK))
+				if (!(curBoard.isOccupied (ordMove.getDest ()) && curBoard.getPiece (ordMove.getDest ()).getColor () == PieceColor.BLACK))
 				{
 					validMoves.add (ordMove);
 				}
@@ -40,7 +40,7 @@ public class Pawn extends Piece
 			{
 				Move ordMove = new Move (this.coord, new Coord (this.coord.getX (), this.coord.getY () - 1));
 				Square firstSquare = curBoard.getSquare (ordMove.getDest ());
-				if (!(firstSquare.isOccupied () && curBoard.getPiece (ordMove.getDest ()).getColor () == PieceColor.BLACK))
+				if (!(curBoard.isOccupied (ordMove.getDest ()) && curBoard.getPiece (ordMove.getDest ()).getColor () == PieceColor.BLACK))
 				{
 					validMoves.add (ordMove);
 				}
@@ -54,14 +54,14 @@ public class Pawn extends Piece
 				Move ordMove    = new Move (this.coord, new Coord (this.coord.getX (), this.coord.getY () + 1));
 				Square secondSquare = curBoard.getSquare (doubleMove.getDest ());
 				Square firstSquare  = curBoard.getSquare (ordMove.getDest ());
-				if ( !(secondSquare.isOccupied () && curBoard.getPiece (doubleMove.getDest ()).getColor () == PieceColor.WHITE) &&
-					 !(firstSquare.isOccupied ()  && curBoard.getPiece (ordMove.getDest ()).getColor ()    == PieceColor.WHITE)
+				if ( !(curBoard.isOccupied (doubleMove.getDest ()) && curBoard.getPiece (doubleMove.getDest ()).getColor () == PieceColor.WHITE) &&
+					 !(curBoard.isOccupied (ordMove.getDest ())  && curBoard.getPiece (ordMove.getDest ()).getColor ()    == PieceColor.WHITE)
 				)
 				{
 					validMoves.add (doubleMove);
 				}
 				
-				if (!(firstSquare.isOccupied () && curBoard.getPiece (ordMove.getDest ()).getColor () == PieceColor.WHITE))
+				if (!(curBoard.isOccupied (ordMove.getDest ()) && curBoard.getPiece (ordMove.getDest ()).getColor () == PieceColor.WHITE))
 				{
 					validMoves.add (ordMove);
 				}
@@ -71,7 +71,7 @@ public class Pawn extends Piece
 			{
 				Move ordMove = new Move (this.coord, new Coord (this.coord.getX (), this.coord.getY () + 1));
 				Square firstSquare = curBoard.getSquare (ordMove.getDest ());
-				if (!(firstSquare.isOccupied () && curBoard.getPiece (ordMove.getDest ()).getColor () == PieceColor.WHITE))
+				if (!(curBoard.isOccupied (ordMove.getDest ()) && curBoard.getPiece (ordMove.getDest ()).getColor () == PieceColor.WHITE))
 				{
 					validMoves.add (ordMove);
 				}
