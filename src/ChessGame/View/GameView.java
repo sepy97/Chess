@@ -78,6 +78,8 @@ class BoardView extends Canvas
 	{
 		this.modelBoard = mB;
 		isMouseClicked = false;
+		MListener mL = new MListener (this);
+		this.addMouseListener (mL);
 	}
 	
 	@Override
@@ -95,44 +97,9 @@ class BoardView extends Canvas
 				
 			}
 		}
-		g.drawLine (0, 0, 100, 100);
 		
 		drawPieces (modelBoard, g);
 		
-		this.addMouseListener (new MouseAdapter () {
-			@Override
-			public void mouseClicked (MouseEvent e)
-			{
-				Graphics g = getGraphics ();
-				super.mouseClicked (e);
-				if (isMouseClicked)
-				{
-					to = e.getPoint ();
-					int fromX = (from.x - 20) / 60;
-					int fromY = (from.y - 50) / 60;
-					int toX = (to.x - 20) / 60;
-					int toY = (to.y - 50) / 60;
-					if ( (fromY+9*fromX) % 2 == 0) g.setColor (Color.lightGray);
-					else g.setColor (Color.darkGray);
-					g.fillRect (20 + fromX * 60, 50 + fromY * 60, 60, 60);
-					modelBoard.makeMove (new Move (new Coord (fromX, fromY), new Coord (toX, toY)));
-					drawPieces (modelBoard, g);
-					isMouseClicked = false;
-				}
-				else {
-					g.setColor (Color.green);
-					from = e.getPoint ();
-					int fromX = (from.x - 20) / 60;
-					int fromY = (from.y - 50) / 60;
-					if (modelBoard.isOccupied (new Coord (fromX, fromY)))
-					{
-						g.fillRect (20 + fromX * 60, 50 + fromY * 60, 60, 60);
-						isMouseClicked = true;
-						drawPieces (modelBoard, g);
-					}
-				}
-			}
-		});
 		
 	}
 	
@@ -264,5 +231,103 @@ class WinListener extends WindowAdapter //implements WindowListener
 	public void windowClosing (WindowEvent myEvent)
 	{
 		curWin.dispose ();
+	}
+}
+
+
+class MListener extends MouseAdapter
+{
+	BoardView curView;
+	
+	public MListener (BoardView thisView)
+	{
+		curView = thisView;
+	}
+	
+	/*@Override
+	public void mouseClicked (MouseEvent e)
+	{
+		Graphics g = curView.getGraphics ();
+		super.mouseClicked (e);
+		if (curView.isMouseClicked)
+		{
+			curView.to = e.getPoint ();
+			int fromX = (curView.from.x - 20) / 60;
+			int fromY = (curView.from.y - 50) / 60;
+			int toX = (curView.to.x - 20) / 60;
+			int toY = (curView.to.y - 50) / 60;
+			if ( (fromY+9*fromX) % 2 == 0) g.setColor (Color.lightGray);
+			else g.setColor (Color.darkGray);
+			g.fillRect (20 + fromX * 60, 50 + fromY * 60, 60, 60);
+			curView.modelBoard.makeMove (new Move (new Coord (fromX, fromY), new Coord (toX, toY)));
+			curView.drawPieces (curView.modelBoard, g);
+			curView.isMouseClicked = false;
+		}
+		else {
+			g.setColor (Color.green);
+			curView.from = e.getPoint ();
+			int fromX = (curView.from.x - 20) / 60;
+			int fromY = (curView.from.y - 50) / 60;
+			if (curView.modelBoard.isOccupied (new Coord (fromX, fromY)))
+			{
+				g.drawRect (20 + fromX * 60, 50 + fromY * 60, 60, 60);
+				curView.isMouseClicked = true;
+				curView.drawPieces (curView.modelBoard, g);
+			}
+		}
+	}*/
+	
+	public void mouseReleased (MouseEvent e)
+	{
+		if (downer) {
+			downer = false;
+			if (new Rectangle(e.getComponent().getLocationOnScreen(), e.getComponent().getSize())
+					.contains(e.getLocationOnScreen())) {
+				downer = false;
+				// CODE
+				new Thread(new Runnable(){
+					public void run(){
+						//Your Listener code
+						Graphics g = curView.getGraphics ();
+						if (curView.isMouseClicked)
+						{
+							curView.to = e.getPoint ();
+							int fromX = (curView.from.x - 20) / 60;
+							int fromY = (curView.from.y - 50) / 60;
+							int toX = (curView.to.x - 20) / 60;
+							int toY = (curView.to.y - 50) / 60;
+							if ( (fromY+9*fromX) % 2 == 0) g.setColor (Color.lightGray);
+							else g.setColor (Color.darkGray);
+							g.drawRect (20 + fromX * 60, 50 + fromY * 60, 60, 60);
+							g.fillRect (20 + fromX * 60, 50 + fromY * 60, 60, 60);
+							curView.modelBoard.makeMove (new Move (new Coord (fromX, fromY), new Coord (toX, toY)));
+							curView.drawPieces (curView.modelBoard, g);
+							curView.isMouseClicked = false;
+						}
+						else {
+							g.setColor (Color.green);
+							curView.from = e.getPoint ();
+							int fromX = (curView.from.x - 20) / 60;
+							int fromY = (curView.from.y - 50) / 60;
+							if (curView.modelBoard.isOccupied (new Coord (fromX, fromY)))
+							{
+								g.drawRect (20 + fromX * 60, 50 + fromY * 60, 60, 60);
+								curView.isMouseClicked = true;
+								curView.drawPieces (curView.modelBoard, g);
+							}
+						}
+					}
+				}).start();
+				
+				/// COde
+			}
+		}
+	}
+	
+	boolean downer = false;
+	
+	public void mousePressed (MouseEvent e)
+	{
+		downer = true;
 	}
 }
