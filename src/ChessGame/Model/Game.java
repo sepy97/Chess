@@ -22,13 +22,13 @@ public class Game
 		do {
 			
 			Move tm;// = new Move ();
-			boolean success = this.gameBoard.makeMove (tm);
+			/*boolean success = this.gameBoard.makeMove (tm);
 			if (success)
 			{
 				currentPlayer = (currentPlayer+1)%2;
 				checkmate = gameBoard.isCheckmate ();
 				stalemate = gameBoard.isStalemate ();
-			}
+			}*/
 		} while (!checkmate && !stalemate);
 	}
 	

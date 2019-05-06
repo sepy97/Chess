@@ -95,7 +95,7 @@ public class Board
 		}
 		else
 		{
-			//НУЖНА ПРОВЕРКА ВАЛИДНОСТИ ХОДА
+			//НУЖНА ПРОВЕРКА ВЗЯТИЯ ФИГУРЫ
 			pieceToMove.changeCoord (toMake.getDest ());
 		}
 		
