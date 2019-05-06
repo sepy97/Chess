@@ -1,29 +1,36 @@
 package ChessGame.Model;
 
+import java.awt.*;
+
 public class Coord
 {
-	private int x;
-	private int y;
+	private Point body;
 	
 	public Coord (int x, int y)
 	{
-		this.x = x;
-		this.y = y;
+		this.body = new Point (x, y);
 	}
 	
 	public Coord (int arrayIndex)
 	{
-		this.x = arrayIndex % 8;
-		this.y = arrayIndex / 8;
+		this.body = new Point (arrayIndex % 8, arrayIndex / 8);
 	}
 	
 	public int getX ()
 	{
-		return this.x;
+		return body.x;
 	}
 	
 	public int getY ()
 	{
-		return this.y;
+		return body.y;
+	}
+	
+	@Override
+	public String toString ()
+	{
+		String result = "";
+		result += body.x + "." + body.y;
+		return result;
 	}
 }

@@ -12,9 +12,9 @@ public class Pawn extends Piece
 	}
 	
 	@Override
-	public Set <Move> getValidMoves (Board curBoard)
+	public HashSet <Move> getValidMoves (Board curBoard)
 	{
-		Set <Move> validMoves = new HashSet<Move> ();
+		HashSet <Move> validMoves = new HashSet<Move> ();
 		if (this.getColor () == PieceColor.WHITE)
 		{
 			if (this.coord.getY () == 6) //2 линия
@@ -78,12 +78,28 @@ public class Pawn extends Piece
 			}
 		
 		}
-		return null;
+		return validMoves;
 	}
 	
 	@Override
 	public PieceType getType ()
 	{
 		return PieceType.PAWN;
+	}
+	
+	@Override
+	public String toString ()
+	{
+		String result = "";
+		if (this.getColor () == PieceColor.WHITE)
+		{
+			result += "W ";
+		}
+		else
+		{
+			result += "B ";
+		}
+		result += "P";
+		return result;
 	}
 }

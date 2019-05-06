@@ -13,14 +13,31 @@ public class King extends Piece
 	}
 	
 	@Override
-	public Set <Move> getValidMoves (Board curBoard)
+	public HashSet <Move> getValidMoves (Board curBoard)
 	{
-		return null;
+		HashSet <Move> validMoves = new HashSet<Move> ();
+		return validMoves;
 	}
 	
 	@Override
 	public PieceType getType ()
 	{
 		return PieceType.KING;
+	}
+	
+	@Override
+	public String toString ()
+	{
+		String result = "";
+		if (this.getColor () == PieceColor.WHITE)
+		{
+			result += "W ";
+		}
+		else
+		{
+			result += "B ";
+		}
+		result += "K";
+		return result;
 	}
 }

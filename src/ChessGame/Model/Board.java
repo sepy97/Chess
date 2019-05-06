@@ -87,13 +87,13 @@ public class Board
 			if (i == gamePieces.size () - 1 ) return false;
 		}
 		
-		Set <Move> validMoves = pieceToMove.getValidMoves (this);
+		HashSet <Move> validMoves = pieceToMove.getValidMoves (this);
 		
-		/*if (!validMoves.contains (toMake))
+		if (!validMoves.contains (toMake))
 		{
 			return false;
 		}
-		else*/
+		else
 		{
 			//НУЖНА ПРОВЕРКА ВАЛИДНОСТИ ХОДА
 			pieceToMove.changeCoord (toMake.getDest ());
@@ -105,5 +105,19 @@ public class Board
 	public boolean isOccupied (Coord coord)
 	{
 		return (getPiece (coord) != null); //@@@@
+	}
+	
+	@Override
+	public String toString ()
+	{
+		String result = "";
+		for (Piece i: gamePieces)
+		{
+			result += i.toString() + " ";
+			result += i.getCoord ().toString ();
+			result += "\n";
+		}
+		
+		return result;
 	}
 }

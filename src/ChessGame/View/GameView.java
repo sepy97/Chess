@@ -33,7 +33,7 @@ public class GameView
 		gameWindow.setVisible (true);
 		
 		chessBoard = new BoardView (thisGame.gameBoard);
-		chessBoard.setBounds (10, 10, 660, 660);
+		chessBoard.setBounds (10, 10, 500, 600);
 		chessBoard.setVisible (true);
 		gameWindow.add (chessBoard);
 		
@@ -57,7 +57,10 @@ public class GameView
 		loadGameBut.setLabel ("Load Game");
 		saveGameBut.setLabel ("Save Game");
 		
+		char [] hor = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+		char [] ver = { '1', '2', '3', '4', '5', '6', '7', '8'};
 		
+		System.out.println (thisGame.toString ());
 	}
 	
 	public static void main (String[] s)
@@ -98,9 +101,30 @@ class BoardView extends Canvas
 			}
 		}
 		
+		drawLabels (g);
 		drawPieces (modelBoard, g);
+	}
+	
+	public void drawLabels (Graphics g)
+	{
+		g.setColor (Color.BLACK);
+		g.drawString ("8", 10, 50  + 35);
+		g.drawString ("7", 10, 110 + 35);
+		g.drawString ("6", 10, 170 + 35);
+		g.drawString ("5", 10, 230 + 35);
+		g.drawString ("4", 10, 290 + 35);
+		g.drawString ("3", 10, 350 + 35);
+		g.drawString ("2", 10, 410 + 35);
+		g.drawString ("1", 10, 470 + 35);
 		
-		
+		g.drawString ("a", 10  + 35, 545);
+		g.drawString ("b", 70  + 35, 545);
+		g.drawString ("c", 130 + 35, 545);
+		g.drawString ("d", 190 + 35, 545);
+		g.drawString ("e", 250 + 35, 545);
+		g.drawString ("f", 310 + 35, 545);
+		g.drawString ("g", 370 + 35, 545);
+		g.drawString ("h", 430 + 35, 545);
 	}
 	
 	public void drawPieces (Board mB, Graphics g)

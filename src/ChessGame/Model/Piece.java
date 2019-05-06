@@ -29,7 +29,10 @@ public abstract class Piece
 		return true;
 	}
 	
-	public abstract Set <Move> getValidMoves (Board curBoard);
+	public abstract HashSet <Move> getValidMoves (Board curBoard);
 	
 	public abstract PieceType getType ();
+	
+	@Override
+	public abstract String toString();
 }

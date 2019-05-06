@@ -13,7 +13,7 @@ public class Knight extends Piece
 	}
 	
 	@Override
-	public Set <Move> getValidMoves (Board curBoard)
+	public HashSet <Move> getValidMoves (Board curBoard)
 	{
 		Set <Move> validMoves;
 		
@@ -24,5 +24,21 @@ public class Knight extends Piece
 	public PieceType getType ()
 	{
 		return PieceType.KNIGHT;
+	}
+	
+	@Override
+	public String toString ()
+	{
+		String result = "";
+		if (this.getColor () == PieceColor.WHITE)
+		{
+			result += "W ";
+		}
+		else
+		{
+			result += "B ";
+		}
+		result += "N";
+		return result;
 	}
 }

@@ -13,7 +13,7 @@ public class Bishop extends Piece
 	}
 	
 	@Override
-	public Set <Move> getValidMoves (Board curBoard)
+	public HashSet <Move> getValidMoves (Board curBoard)
 	{
 		return null;
 	}
@@ -22,5 +22,21 @@ public class Bishop extends Piece
 	public PieceType getType ()
 	{
 		return PieceType.BISHOP;
+	}
+	
+	@Override
+	public String toString ()
+	{
+		String result = "";
+		if (this.getColor () == PieceColor.WHITE)
+		{
+			result += "W ";
+		}
+		else
+		{
+			result += "B ";
+		}
+		result += "B";
+		return result;
 	}
 }
