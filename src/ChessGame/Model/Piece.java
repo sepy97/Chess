@@ -29,7 +29,25 @@ public abstract class Piece
 		return true;
 	}
 	
-	public abstract HashSet <Move> getValidMoves (Board curBoard);
+	public abstract HashSet <Move> getPossibleMoves (Board curBoard);
+	public HashSet <Move> getValidMoves (Board curBoard)
+	{
+		HashSet <Move> result = getPossibleMoves (curBoard);
+		HashSet <Move> validMoves = getPossibleMoves (curBoard);
+		if (result.isEmpty ()) return validMoves;
+		for (Move i: validMoves)
+		{
+			Board copyBoard = new Board (curBoard.toString ());
+			copyBoard.getPiece (i.getFrom ()).changeCoord (i.getDest ());
+			
+			//System.out.println (curBoard.toString ());
+			//System.out.println (copyBoard.toString ());
+			
+			if (copyBoard.hasCheck (this.getColor ())) result.remove (i);
+		}
+		
+		return result;
+	}
 	
 	public abstract PieceType getType ();
 	

@@ -8,8 +8,6 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 
-import static ChessGame.Model.PieceColor.WHITE;
-
 public class GameView
 {
 	private Frame gameWindow;
@@ -136,7 +134,7 @@ class BoardView extends Canvas
 				Piece toDraw = mB.getPiece (new Coord (i, j));
 				if (toDraw != null)
 				{
-					if (toDraw.getColor () == WHITE)
+					if (toDraw.getColor () == PieceColor.WHITE)
 					{
 						switch (toDraw.getType ())
 						{
@@ -327,6 +325,9 @@ class MListener extends MouseAdapter
 							curView.modelBoard.makeMove (new Move (new Coord (fromX, fromY), new Coord (toX, toY)));
 							curView.drawPieces (curView.modelBoard, g);
 							curView.isMouseClicked = false;
+							
+							//if (curView.modelBoard.hasCheck (PieceColor.WHITE)) System.out.println ("White are checked!");
+							//if (curView.modelBoard.hasCheck (PieceColor.BLACK)) System.out.println ("Black are checked!");
 						}
 						else {
 							g.setColor (Color.green);

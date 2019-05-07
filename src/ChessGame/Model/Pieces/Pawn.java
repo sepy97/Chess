@@ -12,7 +12,7 @@ public class Pawn extends Piece
 	}
 	
 	@Override
-	public HashSet <Move> getValidMoves (Board curBoard)
+	public HashSet <Move> getPossibleMoves (Board curBoard)
 	{
 		HashSet <Move> validMoves = new HashSet<Move> ();
 		if (this.getColor () == PieceColor.WHITE)
@@ -37,6 +37,17 @@ public class Pawn extends Piece
 				{
 					validMoves.add (ordMove);
 				}
+			}
+			
+			Move leftAttack  = new Move (this.coord, new Coord (this.coord.getX () - 1, this.coord.getY () - 1));
+			if ( (this.coord.getX () > 0 && this.coord.getY () > 0) && (curBoard.isOccupied (leftAttack.getDest ())) && (curBoard.getPiece (leftAttack.getDest ()).getColor () != this.getColor ()) )
+			{
+				validMoves.add (leftAttack);
+			}
+			Move rightAttack = new Move (this.coord, new Coord (this.coord.getX () + 1, this.coord.getY () - 1));
+			if ( (this.coord.getX () < 7 && this.coord.getY () > 0) && (curBoard.isOccupied (rightAttack.getDest ())) && (curBoard.getPiece (rightAttack.getDest ()).getColor () != this.getColor ()) )
+			{
+				validMoves.add (rightAttack);
 			}
 		}
 		else
@@ -63,9 +74,26 @@ public class Pawn extends Piece
 					validMoves.add (ordMove);
 				}
 			}
+			
+			Move leftAttack  = new Move (this.coord, new Coord (this.coord.getX () - 1, this.coord.getY () + 1));
+			if ( (this.coord.getX () > 0 && this.coord.getY () < 7) && (curBoard.isOccupied (leftAttack.getDest ())) && (curBoard.getPiece (leftAttack.getDest ()).getColor () != this.getColor ()) )
+			{
+				validMoves.add (leftAttack);
+			}
+			Move rightAttack = new Move (this.coord, new Coord (this.coord.getX () + 1, this.coord.getY () + 1));
+			if ( (this.coord.getX () < 7 && this.coord.getY () < 7) && (curBoard.isOccupied (rightAttack.getDest ())) && (curBoard.getPiece (rightAttack.getDest ()).getColor () != this.getColor ()) )
+			{
+				validMoves.add (rightAttack);
+			}
 		}
 		return validMoves;
 	}
+	
+	/*@Override
+	public HashSet <Move> getValidMoves (Board curBoard)
+	{
+		return null;
+	}*/
 	
 	@Override
 	public PieceType getType ()
@@ -76,16 +104,13 @@ public class Pawn extends Piece
 	@Override
 	public String toString ()
 	{
-		String result = "";
 		if (this.getColor () == PieceColor.WHITE)
 		{
-			result += "W ";
+			return "p";
 		}
 		else
 		{
-			result += "B ";
+			return "P";
 		}
-		result += "P";
-		return result;
 	}
 }

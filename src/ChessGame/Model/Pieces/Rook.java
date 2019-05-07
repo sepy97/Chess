@@ -13,7 +13,7 @@ public class Rook extends Piece
 	}
 	
 	@Override
-	public HashSet <Move> getValidMoves (Board curBoard)
+	public HashSet <Move> getPossibleMoves (Board curBoard)
 	{
 		HashSet <Move> validMoves = new HashSet<Move> ();
 		//if (this.getColor () == PieceColor.WHITE)
@@ -82,6 +82,12 @@ public class Rook extends Piece
 		return validMoves;
 	}
 	
+	/*@Override
+	public HashSet <Move> getValidMoves (Board curBoard)
+	{
+		return null;
+	}*/
+	
 	@Override
 	public PieceType getType ()
 	{
@@ -91,16 +97,13 @@ public class Rook extends Piece
 	@Override
 	public String toString ()
 	{
-		String result = "";
 		if (this.getColor () == PieceColor.WHITE)
 		{
-			result += "W ";
+			return "r";
 		}
 		else
 		{
-			result += "B ";
+			return "R";
 		}
-		result += "R";
-		return result;
 	}
 }

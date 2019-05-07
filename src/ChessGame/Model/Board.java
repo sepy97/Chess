@@ -22,6 +22,90 @@ public class Board
 		generateGamePieces ();
 	}
 	
+	public Board (String inp)
+	{
+		int numOfSquares = boardSize*boardSize;
+		gameBoard = new Square [numOfSquares];
+		for (int i = 0; i < numOfSquares; i++)
+		{
+			gameBoard [i] = new Square (new Coord (i));
+		}
+		
+		generateGamePieces (inp);
+	}
+	
+	private void generateGamePieces (String inp)
+	{
+		gamePieces = new ArrayList <Piece> ();
+		for (int i = 0; i < inp.length (); i++)
+		{
+			char tmp = inp.charAt (i);
+			switch (tmp)
+			{
+				case 'p':
+				{
+					gamePieces.add (new Pawn (PieceColor.WHITE, new Coord (i)));
+					break;
+				}
+				case 'n':
+				{
+					gamePieces.add (new Knight (PieceColor.WHITE, new Coord (i)));
+					break;
+				}
+				case 'b':
+				{
+					gamePieces.add (new Bishop (PieceColor.WHITE, new Coord (i)));
+					break;
+				}
+				case 'r':
+				{
+					gamePieces.add (new Rook (PieceColor.WHITE, new Coord (i)));
+					break;
+				}
+				case 'q':
+				{
+					gamePieces.add (new Queen (PieceColor.WHITE, new Coord (i)));
+					break;
+				}
+				case 'k':
+				{
+					gamePieces.add (new King (PieceColor.WHITE, new Coord (i)));
+					break;
+				}
+				case 'P':
+				{
+					gamePieces.add (new Pawn (PieceColor.BLACK, new Coord (i)));
+					break;
+				}
+				case 'N':
+				{
+					gamePieces.add (new Knight (PieceColor.BLACK, new Coord (i)));
+					break;
+				}
+				case 'B':
+				{
+					gamePieces.add (new Bishop (PieceColor.BLACK, new Coord (i)));
+					break;
+				}
+				case 'R':
+				{
+					gamePieces.add (new Rook (PieceColor.BLACK, new Coord (i)));
+					break;
+				}
+				case 'Q':
+				{
+					gamePieces.add (new Queen (PieceColor.BLACK, new Coord (i)));
+					break;
+				}
+				case 'K':
+				{
+					gamePieces.add (new King (PieceColor.BLACK, new Coord (i)));
+					break;
+				}
+			}
+		}
+	}
+	
 	private void generateGamePieces ()
 	{
 		gamePieces = new ArrayList <Piece> ();
@@ -102,20 +186,72 @@ public class Board
 		return true;
 	}
 	
+	public HashSet <Move> getAllValidMoves (PieceColor color)
+	{
+		HashSet <Move> validMoves = new HashSet <Move> ();
+		for (Piece i:gamePieces)
+		{
+			if (i.getColor () == color)
+			{
+				validMoves.addAll (i.getPossibleMoves (this));
+			}
+		}
+		
+		return validMoves;
+	}
+	
 	public boolean isOccupied (Coord coord)
 	{
 		return (getPiece (coord) != null); //@@@@
+	}
+	
+	public boolean hasCheck (PieceColor color)
+	{
+		for (Piece i:gamePieces)
+		{
+			if (i.getColor () == color && i.getType () == PieceType.KING)
+			{
+				King K = (King)i;
+				return K.isChecked (this);
+			}
+		}
+		return false;
+	}
+	
+	public boolean checkMated (PieceColor color)
+	{
+		if (hasCheck (color) )
+		{
+			HashSet <Move> validMoves = getAllValidMoves (color);
+			return validMoves.isEmpty ();
+		}
+		return false;
+	}
+	
+	public boolean staleMated (PieceColor color)
+	{
+		if (!hasCheck (color))
+		{
+			HashSet <Move> validMoves = getAllValidMoves (color);
+			return validMoves.isEmpty ();
+		}
+		return false;
 	}
 	
 	@Override
 	public String toString ()
 	{
 		String result = "";
-		for (Piece i: gamePieces)
+		for (int i = 0; i < 64; i++)
 		{
-			result += i.toString() + " ";
-			result += i.getCoord ().toString ();
-			result += "\n";
+			if (this.isOccupied (new Coord (i)) )
+			{
+				result += this.getPiece (new Coord (i)).toString ();
+			}
+			else
+			{
+				result += "@";
+			}
 		}
 		
 		return result;

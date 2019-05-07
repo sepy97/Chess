@@ -13,145 +13,42 @@ public class King extends Piece
 	}
 	
 	@Override
-	public HashSet <Move> getValidMoves (Board curBoard)
+	public HashSet <Move> getPossibleMoves (Board curBoard)
 	{
 		HashSet <Move> validMoves = new HashSet<Move> ();
-		if (this.getColor () == PieceColor.WHITE)
+		
+		Move kingMoves[] = new Move[8];
+		kingMoves[0] = new Move (this.coord, new Coord (this.coord.getX (), this.coord.getY () - 1));
+		kingMoves[1] = new Move (this.coord, new Coord (this.coord.getX (), this.coord.getY () + 1));
+		kingMoves[2] = new Move (this.coord, new Coord (this.coord.getX () - 1, this.coord.getY ()));
+		kingMoves[3] = new Move (this.coord, new Coord (this.coord.getX () + 1, this.coord.getY ()));
+		kingMoves[4] = new Move (this.coord, new Coord (this.coord.getX () - 1, this.coord.getY () - 1));
+		kingMoves[5] = new Move (this.coord, new Coord (this.coord.getX () + 1, this.coord.getY () - 1));
+		kingMoves[6] = new Move (this.coord, new Coord (this.coord.getX () - 1, this.coord.getY () + 1));
+		kingMoves[7] = new Move (this.coord, new Coord (this.coord.getX () + 1, this.coord.getY () + 1));
+		
+		
+		for (int i = 0; i < 8; i++)
 		{
-			if (this.coord.getY () != 7) // не 1 линия
+			if (kingMoves[i].getDest ().getY () >= 0 &&
+				kingMoves[i].getDest ().getY () <= 7 &&
+				kingMoves[i].getDest ().getX () >= 0 &&
+				kingMoves[i].getDest ().getX () <= 7)
 			{
-				Move ordMove = new Move (this.coord, new Coord (this.coord.getX (), this.coord.getY () + 1));
-				if (!(curBoard.isOccupied (ordMove.getDest ()) && curBoard.getPiece (ordMove.getDest ()).getColor () == PieceColor.BLACK))
+				if ( !(curBoard.isOccupied (kingMoves[i].getDest ()) && curBoard.getPiece (kingMoves[i].getDest ()).getColor () == this.getColor ()) )
 				{
-					validMoves.add (ordMove);
-				}
-			}
-			if (this.coord.getY () != 0) //не 8 линия
-			{
-				Move ordMove = new Move (this.coord, new Coord (this.coord.getX (), this.coord.getY () - 1));
-				if (!(curBoard.isOccupied (ordMove.getDest ()) && curBoard.getPiece (ordMove.getDest ()).getColor () == PieceColor.BLACK))
-				{
-					validMoves.add (ordMove);
-				}
-			}
-			if (this.coord.getX () != 0) //не a-линия
-			{
-				Move ordMove = new Move (this.coord, new Coord (this.coord.getX () - 1, this.coord.getY ()));
-				if (!(curBoard.isOccupied (ordMove.getDest ()) && curBoard.getPiece (ordMove.getDest ()).getColor () == PieceColor.BLACK))
-				{
-					validMoves.add (ordMove);
-				}
-			}
-			if (this.coord.getX () != 7) //не h-линия
-			{
-				Move ordMove = new Move (this.coord, new Coord (this.coord.getX () + 1, this.coord.getY ()));
-				if (!(curBoard.isOccupied (ordMove.getDest ()) && curBoard.getPiece (ordMove.getDest ()).getColor () == PieceColor.BLACK))
-				{
-					validMoves.add (ordMove);
-				}
-			}
-			if (! (this.coord.getX () == 0 && this.coord.getY () == 0)) //не a8
-			{
-				Move ordMove = new Move (this.coord, new Coord (this.coord.getX () - 1, this.coord.getY () - 1));
-				if (!(curBoard.isOccupied (ordMove.getDest ()) && curBoard.getPiece (ordMove.getDest ()).getColor () == PieceColor.BLACK))
-				{
-					validMoves.add (ordMove);
-				}
-			}
-			if (! (this.coord.getX () == 0 && this.coord.getY () == 7)) //не a1
-			{
-				Move ordMove = new Move (this.coord, new Coord (this.coord.getX () - 1, this.coord.getY () + 1));
-				if (!(curBoard.isOccupied (ordMove.getDest ()) && curBoard.getPiece (ordMove.getDest ()).getColor () == PieceColor.BLACK))
-				{
-					validMoves.add (ordMove);
-				}
-			}
-			if (! (this.coord.getX () == 7 && this.coord.getY () == 0)) //не h8
-			{
-				Move ordMove = new Move (this.coord, new Coord (this.coord.getX () + 1, this.coord.getY () - 1));
-				if (!(curBoard.isOccupied (ordMove.getDest ()) && curBoard.getPiece (ordMove.getDest ()).getColor () == PieceColor.BLACK))
-				{
-					validMoves.add (ordMove);
-				}
-			}
-			if (! (this.coord.getX () == 7 && this.coord.getY () == 7)) //не a8
-			{
-				Move ordMove = new Move (this.coord, new Coord (this.coord.getX () + 1, this.coord.getY () + 1));
-				if (!(curBoard.isOccupied (ordMove.getDest ()) && curBoard.getPiece (ordMove.getDest ()).getColor () == PieceColor.BLACK))
-				{
-					validMoves.add (ordMove);
-				}
-			}
-		}
-		else
-		{
-			if (this.coord.getY () != 7) // не 1 линия
-			{
-				Move ordMove = new Move (this.coord, new Coord (this.coord.getX (), this.coord.getY () + 1));
-				if (!(curBoard.isOccupied (ordMove.getDest ()) && curBoard.getPiece (ordMove.getDest ()).getColor () == PieceColor.WHITE))
-				{
-					validMoves.add (ordMove);
-				}
-			}
-			if (this.coord.getY () != 0) //не 8 линия
-			{
-				Move ordMove = new Move (this.coord, new Coord (this.coord.getX (), this.coord.getY () - 1));
-				if (!(curBoard.isOccupied (ordMove.getDest ()) && curBoard.getPiece (ordMove.getDest ()).getColor () == PieceColor.WHITE))
-				{
-					validMoves.add (ordMove);
-				}
-			}
-			if (this.coord.getX () != 0) //не a-линия
-			{
-				Move ordMove = new Move (this.coord, new Coord (this.coord.getX () - 1, this.coord.getY ()));
-				if (!(curBoard.isOccupied (ordMove.getDest ()) && curBoard.getPiece (ordMove.getDest ()).getColor () == PieceColor.WHITE))
-				{
-					validMoves.add (ordMove);
-				}
-			}
-			if (this.coord.getX () != 7) //не h-линия
-			{
-				Move ordMove = new Move (this.coord, new Coord (this.coord.getX () + 1, this.coord.getY ()));
-				if (!(curBoard.isOccupied (ordMove.getDest ()) && curBoard.getPiece (ordMove.getDest ()).getColor () == PieceColor.WHITE))
-				{
-					validMoves.add (ordMove);
-				}
-			}
-			if (! (this.coord.getX () == 0 && this.coord.getY () == 0)) //не a8
-			{
-				Move ordMove = new Move (this.coord, new Coord (this.coord.getX () - 1, this.coord.getY () - 1));
-				if (!(curBoard.isOccupied (ordMove.getDest ()) && curBoard.getPiece (ordMove.getDest ()).getColor () == PieceColor.WHITE))
-				{
-					validMoves.add (ordMove);
-				}
-			}
-			if (! (this.coord.getX () == 0 && this.coord.getY () == 7)) //не a1
-			{
-				Move ordMove = new Move (this.coord, new Coord (this.coord.getX () - 1, this.coord.getY () + 1));
-				if (!(curBoard.isOccupied (ordMove.getDest ()) && curBoard.getPiece (ordMove.getDest ()).getColor () == PieceColor.WHITE))
-				{
-					validMoves.add (ordMove);
-				}
-			}
-			if (! (this.coord.getX () == 7 && this.coord.getY () == 0)) //не h8
-			{
-				Move ordMove = new Move (this.coord, new Coord (this.coord.getX () + 1, this.coord.getY () - 1));
-				if (!(curBoard.isOccupied (ordMove.getDest ()) && curBoard.getPiece (ordMove.getDest ()).getColor () == PieceColor.WHITE))
-				{
-					validMoves.add (ordMove);
-				}
-			}
-			if (! (this.coord.getX () == 7 && this.coord.getY () == 7)) //не a8
-			{
-				Move ordMove = new Move (this.coord, new Coord (this.coord.getX () + 1, this.coord.getY () + 1));
-				if (!(curBoard.isOccupied (ordMove.getDest ()) && curBoard.getPiece (ordMove.getDest ()).getColor () == PieceColor.WHITE))
-				{
-					validMoves.add (ordMove);
+					validMoves.add (kingMoves[i]);
 				}
 			}
 		}
 		return validMoves;
 	}
+	
+	/*@Override
+	public HashSet <Move> getValidMoves (Board curBoard)
+	{
+		return null;
+	}*/
 	
 	@Override
 	public PieceType getType ()
@@ -162,16 +59,32 @@ public class King extends Piece
 	@Override
 	public String toString ()
 	{
-		String result = "";
 		if (this.getColor () == PieceColor.WHITE)
 		{
-			result += "W ";
+			return "k";
 		}
 		else
 		{
-			result += "B ";
+			return "K";
 		}
-		result += "K";
-		return result;
+	}
+	
+	public boolean isChecked (Board curBoard)
+	{
+		if (this.getColor () == PieceColor.WHITE)
+		{
+			for (Move i: curBoard.getAllValidMoves (PieceColor.BLACK))
+			{
+				if (i.getDest ().equals (this.getCoord ())) return true;
+			}
+		}
+		else
+		{
+			for (Move i: curBoard.getAllValidMoves (PieceColor.WHITE))
+			{
+				if (i.getDest ().equals (this.getCoord ())) return true;
+			}
+		}
+		return false;
 	}
 }

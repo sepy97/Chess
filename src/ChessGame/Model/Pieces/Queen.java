@@ -13,7 +13,7 @@ public class Queen extends Piece
 	}
 	
 	@Override
-	public HashSet <Move> getValidMoves (Board curBoard)
+	public HashSet <Move> getPossibleMoves (Board curBoard)
 	{
 		HashSet <Move> validMoves = new HashSet<Move> ();
 		for (int i = 1; i < 8; i++) {
@@ -131,6 +131,12 @@ public class Queen extends Piece
 		return validMoves;
 	}
 	
+	/*@Override
+	public HashSet <Move> getValidMoves (Board curBoard)
+	{
+		return null;
+	}*/
+	
 	@Override
 	public PieceType getType ()
 	{
@@ -140,16 +146,13 @@ public class Queen extends Piece
 	@Override
 	public String toString ()
 	{
-		String result = "";
 		if (this.getColor () == PieceColor.WHITE)
 		{
-			result += "W ";
+			return "q";
 		}
 		else
 		{
-			result += "B ";
+			return "Q";
 		}
-		result += "Q";
-		return result;
 	}
 }

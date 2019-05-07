@@ -33,4 +33,26 @@ public class Coord
 		result += body.x + "." + body.y;
 		return result;
 	}
+	
+	@Override
+	public int hashCode(){
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(this.getX ());
+		buffer.append(this.getY ());
+		buffer.append(this.getX ());
+		buffer.append(this.getY ());
+		return buffer.toString().hashCode();
+	}
+	
+	@Override
+	public boolean equals (Object obj)
+	{
+		boolean result = this.getX () == ((Coord)obj).getX () &&
+				this.getY () == ((Coord)obj).getY () &&
+				this.getX () == ((Coord)obj).getX () &&
+				this.getY () == ((Coord)obj).getY () &&
+				obj instanceof Coord;
+		
+		return result;
+	}
 }
