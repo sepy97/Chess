@@ -9,10 +9,12 @@ public class Board
 	private Square[] gameBoard;
 	private int boardSize = 8;
 	private ArrayList <Piece> gamePieces;
+	PieceColor current;
 	
 	public Board ()
 	{
 		int numOfSquares = boardSize*boardSize;
+		current = PieceColor.WHITE;
 		gameBoard = new Square [numOfSquares];
 		for (int i = 0; i < numOfSquares; i++)
 		{
@@ -25,6 +27,7 @@ public class Board
 	public Board (String inp)
 	{
 		int numOfSquares = boardSize*boardSize;
+		current = PieceColor.WHITE;
 		gameBoard = new Square [numOfSquares];
 		for (int i = 0; i < numOfSquares; i++)
 		{
@@ -145,14 +148,9 @@ public class Board
 	
 	public Piece getPiece (Coord coord)
 	{
-		//if (gameBoard[coord.getX() + boardSize * coord.getY()].isOccupied ())
+		for (Piece i:gamePieces)
 		{
-			//Piece toreturn = new Piece;
-			for (Piece i:gamePieces)
-			{
-				if (i.coord.getY () == coord.getY () && i.coord.getX () == coord.getX ()) return i;
-			}
-			//return gamePieces.get
+			if (i.coord.equals (coord)) return i;
 		}
 		return null;
 	}
@@ -180,9 +178,22 @@ public class Board
 		else
 		{
 			//НУЖНА ПРОВЕРКА ВЗЯТИЯ ФИГУРЫ
+			if (this.isOccupied (toMake.getDest ()) )
+			{
+				for (Piece i: gamePieces)
+				{
+					if (i.getCoord ().equals (toMake.getDest ()) && i.getColor () != pieceToMove.getColor () && i.getType () != PieceType.KING)
+					{
+						gamePieces.remove (i);
+						break;
+					}
+				}
+			}
 			pieceToMove.changeCoord (toMake.getDest ());
 		}
 		
+		if (current == PieceColor.WHITE) current = PieceColor.BLACK;
+		else current = PieceColor.WHITE;
 		return true;
 	}
 	

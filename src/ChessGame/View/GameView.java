@@ -55,9 +55,6 @@ public class GameView
 		loadGameBut.setLabel ("Load Game");
 		saveGameBut.setLabel ("Save Game");
 		
-		char [] hor = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
-		char [] ver = { '1', '2', '3', '4', '5', '6', '7', '8'};
-		
 		System.out.println (thisGame.toString ());
 	}
 	
@@ -127,6 +124,8 @@ class BoardView extends Canvas
 	
 	public void drawPieces (Board mB, Graphics g)
 	{
+		System.out.println (mB.toString ());
+		
 		for (int i = 0; i < 8; i++)
 		{
 			for (int j = 0; j < 8; j++)
@@ -338,7 +337,7 @@ class MListener extends MouseAdapter
 							{
 								g.drawRect (20 + fromX * 60, 50 + fromY * 60, 60, 60);
 								curView.isMouseClicked = true;
-								curView.drawPieces (curView.modelBoard, g);
+								//curView.drawPieces (curView.modelBoard, g);
 							}
 						}
 					}

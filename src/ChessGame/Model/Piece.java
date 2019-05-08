@@ -37,6 +37,11 @@ public abstract class Piece
 		if (result.isEmpty ()) return validMoves;
 		for (Move i: validMoves)
 		{
+			if (curBoard.getPiece (i.getFrom ()).getColor () != curBoard.current)
+			{
+				result.remove (i);
+				continue;
+			}
 			Board copyBoard = new Board (curBoard.toString ());
 			copyBoard.getPiece (i.getFrom ()).changeCoord (i.getDest ());
 			
