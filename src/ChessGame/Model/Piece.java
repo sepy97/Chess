@@ -43,7 +43,14 @@ public abstract class Piece
 				continue;
 			}
 			Board copyBoard = new Board (curBoard.toString ());
-			copyBoard.getPiece (i.getFrom ()).changeCoord (i.getDest ());
+			
+			Piece toMove = copyBoard.getPiece (i.getFrom ());
+			if (copyBoard.isOccupied (i.getDest ()) && copyBoard.getPiece (i.getDest ()).getColor () != this.getColor () )
+			{
+				//attacking move
+				copyBoard.removePiece (copyBoard.getPiece (i.getDest ()));
+			}
+			toMove.changeCoord (i.getDest ());
 			
 			//System.out.println (curBoard.toString ());
 			//System.out.println (copyBoard.toString ());

@@ -141,6 +141,11 @@ public class Board
 		gamePieces.add (new Knight (PieceColor.WHITE, new Coord (6, 7)));
 	}
 	
+	public void removePiece (Piece toRemove)
+	{
+		gamePieces.remove (toRemove);
+	}
+	
 	public Square getSquare (Coord coord)
 	{
 		return gameBoard [coord.getX() + boardSize * coord.getY()];

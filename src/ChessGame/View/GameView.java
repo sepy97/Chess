@@ -7,12 +7,12 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class GameView
 {
 	private Frame gameWindow;
 	private BoardView chessBoard;
-	private Label [] pieces;
 	
 	private Button newGameBut;
 	private Button loadGameBut;
@@ -55,6 +55,28 @@ public class GameView
 		loadGameBut.setLabel ("Load Game");
 		saveGameBut.setLabel ("Save Game");
 		
+		saveGameBut.addActionListener(
+				new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				System.out.println("You clicked a save button!");
+				
+				FileDialog fd = new FileDialog(gameWindow, "Choose a file", FileDialog.LOAD);
+				fd.setDirectory("/Users/sepy/Documents/JAVA/ChessGame/");
+				fd.setFile("*.chess");
+				fd.setVisible(true);
+				String filename = fd.getFile();
+				if (filename == null)
+					System.out.println("You cancelled the choice");
+				else
+					System.out.println("You chose " + filename);
+				
+				//здесь нужно сохранить в filename game.toString()
+			}
+		});
+		
 		System.out.println (thisGame.toString ());
 	}
 	
@@ -72,12 +94,87 @@ class BoardView extends Canvas
 	Point from;
 	Point to;
 	
+	private Image WHITE_PAWN;
+	private Image WHITE_KNIGHT;
+	private Image WHITE_BISHOP;
+	private Image WHITE_ROOK;
+	private Image WHITE_QUEEN;
+	private Image WHITE_KING;
+	private Image BLACK_PAWN;
+	private Image BLACK_KNIGHT;
+	private Image BLACK_BISHOP;
+	private Image BLACK_ROOK;
+	private Image BLACK_QUEEN;
+	private Image BLACK_KING;
+	
 	public BoardView (Board mB)
 	{
 		this.modelBoard = mB;
 		isMouseClicked = false;
 		MListener mL = new MListener (this);
 		this.addMouseListener (mL);
+		
+		try {
+			WHITE_PAWN = ImageIO.read (getClass ().getResource ("/ChessGame/View/images/WHITE_PAWN.png"));
+		} catch (IOException e) {
+			e.printStackTrace ();
+		}
+		try {
+			WHITE_KNIGHT = ImageIO.read (getClass ().getResource ("/ChessGame/View/images/WHITE_KNIGHT.png"));
+		} catch (IOException e) {
+			e.printStackTrace ();
+		}
+		try {
+			WHITE_BISHOP = ImageIO.read (getClass ().getResource ("/ChessGame/View/images/WHITE_BISHOP.png"));
+		} catch (IOException e) {
+			e.printStackTrace ();
+		}
+		try {
+			WHITE_ROOK = ImageIO.read (getClass ().getResource ("/ChessGame/View/images/WHITE_ROOK.png"));
+		} catch (IOException e) {
+			e.printStackTrace ();
+		}
+		try {
+			WHITE_QUEEN = ImageIO.read (getClass ().getResource ("/ChessGame/View/images/WHITE_QUEEN.png"));
+		} catch (IOException e) {
+			e.printStackTrace ();
+		}
+		try {
+			WHITE_KING = ImageIO.read (getClass ().getResource ("/ChessGame/View/images/WHITE_KING.png"));
+		} catch (IOException e) {
+			e.printStackTrace ();
+		}
+		try {
+			BLACK_PAWN = ImageIO.read (getClass ().getResource ("/ChessGame/View/images/BLACK_PAWN.png"));
+		} catch (IOException e) {
+			e.printStackTrace ();
+		}
+		try {
+			BLACK_KNIGHT = ImageIO.read (getClass ().getResource ("/ChessGame/View/images/BLACK_KNIGHT.png"));
+		} catch (IOException e) {
+			e.printStackTrace ();
+		}
+		try {
+			BLACK_BISHOP = ImageIO.read (getClass ().getResource ("/ChessGame/View/images/BLACK_BISHOP.png"));
+		} catch (IOException e) {
+			e.printStackTrace ();
+		}
+		try {
+			BLACK_ROOK = ImageIO.read (getClass ().getResource ("/ChessGame/View/images/BLACK_ROOK.png"));
+		} catch (IOException e) {
+			e.printStackTrace ();
+		}
+		try {
+			BLACK_QUEEN = ImageIO.read (getClass ().getResource ("/ChessGame/View/images/BLACK_QUEEN.png"));
+		} catch (IOException e) {
+			e.printStackTrace ();
+		}
+		try {
+			BLACK_KING = ImageIO.read (getClass ().getResource ("/ChessGame/View/images/BLACK_KING.png"));
+		} catch (IOException e) {
+			e.printStackTrace ();
+		}
+		
 	}
 	
 	@Override
@@ -133,106 +230,16 @@ class BoardView extends Canvas
 				Piece toDraw = mB.getPiece (new Coord (i, j));
 				if (toDraw != null)
 				{
-					if (toDraw.getColor () == PieceColor.WHITE)
-					{
-						switch (toDraw.getType ())
-						{
-							case PAWN:
-								try {
-									g.drawImage (ImageIO.read (getClass ().getResource ("/ChessGame/View/images/white_pawn.png")), 20+i*60, 50+j*60, 60, 60, null);
-								} catch (IOException e) {
-									e.printStackTrace ();
-								}
-								break;
-							case KNIGHT:
-								try {
-									g.drawImage (ImageIO.read (getClass ().getResource ("/ChessGame/View/images/white_knight.png")), 20+i*60, 50+j*60, 60, 60, null);
-								} catch (IOException e) {
-									e.printStackTrace ();
-								}
-								break;
-							case BISHOP:
-								try {
-									g.drawImage (ImageIO.read (getClass ().getResource ("/ChessGame/View/images/white_bishop.png")), 20+i*60, 50+j*60, 60, 60, null);
-								} catch (IOException e) {
-									e.printStackTrace ();
-								}
-								break;
-							case ROOK:
-								try {
-									g.drawImage (ImageIO.read (getClass ().getResource ("/ChessGame/View/images/white_rook.png")), 20+i*60, 50+j*60, 60, 60, null);
-								} catch (IOException e) {
-									e.printStackTrace ();
-								}
-								break;
-							case QUEEN:
-								try {
-									g.drawImage (ImageIO.read (getClass ().getResource ("/ChessGame/View/images/white_queen.png")), 20+i*60, 50+j*60, 60, 60, null);
-								} catch (IOException e) {
-									e.printStackTrace ();
-								}
-								break;
-							case KING:
-								try {
-									g.drawImage (ImageIO.read (getClass ().getResource ("/ChessGame/View/images/white_king.png")), 20+i*60, 50+j*60, 60, 60, null);
-								} catch (IOException e) {
-									e.printStackTrace ();
-								}
-								break;
-							default:
-								break;
-						}
+					Object instance = null;
+					try {
+						instance = getClass().getDeclaredField(toDraw.getColor ().name () + "_" + toDraw.getType ().name ()).get(this);
+					} catch (IllegalAccessException e) {
+						e.printStackTrace ();
+					} catch (NoSuchFieldException e) {
+						e.printStackTrace ();
 					}
-					else
-					{
-						switch (toDraw.getType ())
-						{
-							case PAWN:
-								try {
-									g.drawImage (ImageIO.read (getClass ().getResource ("/ChessGame/View/images/black_pawn.png")), 20+i*60, 50+j*60, 60, 60, null);
-								} catch (IOException e) {
-									e.printStackTrace ();
-								}
-								break;
-							case KNIGHT:
-								try {
-									g.drawImage (ImageIO.read (getClass ().getResource ("/ChessGame/View/images/black_knight.png")), 20+i*60, 50+j*60, 60, 60, null);
-								} catch (IOException e) {
-									e.printStackTrace ();
-								}
-								break;
-							case BISHOP:
-								try {
-									g.drawImage (ImageIO.read (getClass ().getResource ("/ChessGame/View/images/black_bishop.png")), 20+i*60, 50+j*60, 60, 60, null);
-								} catch (IOException e) {
-									e.printStackTrace ();
-								}
-								break;
-							case ROOK:
-								try {
-									g.drawImage (ImageIO.read (getClass ().getResource ("/ChessGame/View/images/black_rook.png")), 20+i*60, 50+j*60, 60, 60, null);
-								} catch (IOException e) {
-									e.printStackTrace ();
-								}
-								break;
-							case QUEEN:
-								try {
-									g.drawImage (ImageIO.read (getClass ().getResource ("/ChessGame/View/images/black_queen.png")), 20+i*60, 50+j*60, 60, 60, null);
-								} catch (IOException e) {
-									e.printStackTrace ();
-								}
-								break;
-							case KING:
-								try {
-									g.drawImage (ImageIO.read (getClass ().getResource ("/ChessGame/View/images/black_king.png")), 20+i*60, 50+j*60, 60, 60, null);
-								} catch (IOException e) {
-									e.printStackTrace ();
-								}
-								break;
-							default:
-								break;
-						}
-					}
+					g.drawImage ( (Image) instance, 20+i*60, 50+j*60, 60, 60, null);
+				
 				}
 			}
 		}
@@ -317,12 +324,12 @@ class MListener extends MouseAdapter
 							int fromY = (curView.from.y - 50) / 60;
 							int toX = (curView.to.x - 20) / 60;
 							int toY = (curView.to.y - 50) / 60;
-							if ( (fromY+9*fromX) % 2 == 0) g.setColor (Color.lightGray);
+							/*if ( (fromY+9*fromX) % 2 == 0) g.setColor (Color.lightGray);
 							else g.setColor (Color.darkGray);
 							g.drawRect (20 + fromX * 60, 50 + fromY * 60, 60, 60);
-							g.fillRect (20 + fromX * 60, 50 + fromY * 60, 60, 60);
+							g.fillRect (20 + fromX * 60, 50 + fromY * 60, 60, 60);*/
 							curView.modelBoard.makeMove (new Move (new Coord (fromX, fromY), new Coord (toX, toY)));
-							curView.drawPieces (curView.modelBoard, g);
+							curView.repaint ();// .drawPieces (curView.modelBoard, g);
 							curView.isMouseClicked = false;
 							
 							//if (curView.modelBoard.hasCheck (PieceColor.WHITE)) System.out.println ("White are checked!");
