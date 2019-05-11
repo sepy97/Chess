@@ -1,8 +1,9 @@
 package ChessGame.Model;
 
+import java.io.Serializable;
 import java.util.*;
 
-public abstract class Piece
+public abstract class Piece implements Serializable
 {
 	private PieceColor color;
 	protected Coord coord;

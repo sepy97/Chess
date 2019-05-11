@@ -5,8 +5,7 @@ import ChessGame.Model.*;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class GameView
@@ -55,13 +54,13 @@ public class GameView
 		loadGameBut.setLabel ("Load Game");
 		saveGameBut.setLabel ("Save Game");
 		
-		saveGameBut.addActionListener(
+		loadGameBut.addActionListener(
 				new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				System.out.println("You clicked a save button!");
+				System.out.println("You clicked a load button!");
 				
 				FileDialog fd = new FileDialog(gameWindow, "Choose a file", FileDialog.LOAD);
 				fd.setDirectory("/Users/sepy/Documents/JAVA/ChessGame/");
@@ -73,7 +72,46 @@ public class GameView
 				else
 					System.out.println("You chose " + filename);
 				
+				try {
+					ObjectInputStream in = new ObjectInputStream (new FileInputStream (filename));
+					thisGame.loadObject (in.readObject ());// FromString (in.readObject ().toString ());
+				} catch (IOException e2) {
+					e2.printStackTrace ();
+				} catch (ClassNotFoundException e2) {
+					e2.printStackTrace ();
+				}
+				
+				chessBoard.repaint ();
 				//здесь нужно сохранить в filename game.toString()
+			}
+		});
+		
+		saveGameBut.addActionListener(
+				new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				System.out.println("You clicked a save button!");
+				
+				FileDialog fileDialog = new FileDialog(gameWindow, "Enter filename", FileDialog.SAVE);
+				fileDialog.setFilenameFilter(new FilenameFilter() {
+					public boolean accept(File dir, String name) {
+						return name.endsWith(".chess");
+					}
+				});
+				fileDialog.setFile("Untitled.chess");
+				fileDialog.setVisible(true);
+				try {
+					ObjectOutputStream out = new ObjectOutputStream (new FileOutputStream (fileDialog.getFile ()));
+
+					out.writeObject (thisGame);//.toString ());
+					
+					out.close ();
+				} catch (IOException e2) {
+					e2.printStackTrace ();
+				}
+				
 			}
 		});
 		
@@ -87,6 +125,32 @@ public class GameView
 	}
 }
 
+/*String outputFile = "/Users/sepy/Desktop/BOX.txt";
+				try {
+						ObjectOutputStream out = new ObjectOutputStream (new FileOutputStream (filename));
+      
+      
+      
+						out.writeObject (thisGame.toString ());
+						
+						out.close ();
+						} catch (IOException e2) {
+						e2.printStackTrace ();
+						}*/
+				
+	/*String inputFile = "/Users/sepy/Desktop/BOX.txt";
+				try {
+						ObjectInputStream in = new ObjectInputStream (new FileInputStream (inputFile));
+						
+						System.out.println (in.readObject ());
+						
+						
+						} catch (IOException e) {
+						e.printStackTrace ();
+						} catch (ClassNotFoundException e) {
+						e.printStackTrace ();
+						}*/
+				
 class BoardView extends Canvas
 {
 	Board modelBoard;
@@ -262,7 +326,7 @@ class WinListener extends WindowAdapter //implements WindowListener
 	}
 }
 
-
+/*
 class MListener extends MouseAdapter
 {
 	BoardView curView;
@@ -271,39 +335,6 @@ class MListener extends MouseAdapter
 	{
 		curView = thisView;
 	}
-	
-	/*@Override
-	public void mouseClicked (MouseEvent e)
-	{
-		Graphics g = curView.getGraphics ();
-		super.mouseClicked (e);
-		if (curView.isMouseClicked)
-		{
-			curView.to = e.getPoint ();
-			int fromX = (curView.from.x - 20) / 60;
-			int fromY = (curView.from.y - 50) / 60;
-			int toX = (curView.to.x - 20) / 60;
-			int toY = (curView.to.y - 50) / 60;
-			if ( (fromY+9*fromX) % 2 == 0) g.setColor (Color.lightGray);
-			else g.setColor (Color.darkGray);
-			g.fillRect (20 + fromX * 60, 50 + fromY * 60, 60, 60);
-			curView.modelBoard.makeMove (new Move (new Coord (fromX, fromY), new Coord (toX, toY)));
-			curView.drawPieces (curView.modelBoard, g);
-			curView.isMouseClicked = false;
-		}
-		else {
-			g.setColor (Color.green);
-			curView.from = e.getPoint ();
-			int fromX = (curView.from.x - 20) / 60;
-			int fromY = (curView.from.y - 50) / 60;
-			if (curView.modelBoard.isOccupied (new Coord (fromX, fromY)))
-			{
-				g.drawRect (20 + fromX * 60, 50 + fromY * 60, 60, 60);
-				curView.isMouseClicked = true;
-				curView.drawPieces (curView.modelBoard, g);
-			}
-		}
-	}*/
 	
 	public void mouseReleased (MouseEvent e)
 	{
@@ -324,16 +355,11 @@ class MListener extends MouseAdapter
 							int fromY = (curView.from.y - 50) / 60;
 							int toX = (curView.to.x - 20) / 60;
 							int toY = (curView.to.y - 50) / 60;
-							/*if ( (fromY+9*fromX) % 2 == 0) g.setColor (Color.lightGray);
-							else g.setColor (Color.darkGray);
-							g.drawRect (20 + fromX * 60, 50 + fromY * 60, 60, 60);
-							g.fillRect (20 + fromX * 60, 50 + fromY * 60, 60, 60);*/
+							
 							curView.modelBoard.makeMove (new Move (new Coord (fromX, fromY), new Coord (toX, toY)));
 							curView.repaint ();// .drawPieces (curView.modelBoard, g);
 							curView.isMouseClicked = false;
 							
-							//if (curView.modelBoard.hasCheck (PieceColor.WHITE)) System.out.println ("White are checked!");
-							//if (curView.modelBoard.hasCheck (PieceColor.BLACK)) System.out.println ("Black are checked!");
 						}
 						else {
 							g.setColor (Color.green);
@@ -361,4 +387,4 @@ class MListener extends MouseAdapter
 	{
 		downer = true;
 	}
-}
+}*/

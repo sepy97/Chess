@@ -2,9 +2,10 @@ package ChessGame.Model;
 
 import ChessGame.Model.Pieces.*;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Board
+public class Board implements Serializable
 {
 	private Square[] gameBoard;
 	private int boardSize = 8;
@@ -271,5 +272,85 @@ public class Board
 		}
 		
 		return result;
+	}
+	
+	public void loadFromString (String inp)
+	{
+		this.gamePieces.clear ();
+		//this.gameBoard
+		if (inp.length () > 64)
+		{
+			System.out.println ("Not correct STRING!!!!\n");
+			return;
+		}
+		
+		for (int i = 0; i < 64; i++)
+		{
+			switch (inp.charAt (i))
+			{
+				case 'p':
+				{
+					this.gamePieces.add (new Pawn (PieceColor.WHITE, new Coord (i)));
+					break;
+				}
+				case 'P':
+				{
+					this.gamePieces.add (new Pawn (PieceColor.BLACK, new Coord (i)));
+					break;
+				}
+				case 'n':
+				{
+					this.gamePieces.add (new Knight (PieceColor.WHITE, new Coord (i)));
+					break;
+				}
+				case 'N':
+				{
+					this.gamePieces.add (new Knight (PieceColor.BLACK, new Coord (i)));
+					break;
+				}
+				case 'b':
+				{
+					this.gamePieces.add (new Bishop (PieceColor.WHITE, new Coord (i)));
+					break;
+				}
+				case 'B':
+				{
+					this.gamePieces.add (new Bishop (PieceColor.BLACK, new Coord (i)));
+					break;
+				}
+				case 'r':
+				{
+					this.gamePieces.add (new Rook (PieceColor.WHITE, new Coord (i)));
+					break;
+				}
+				case 'R':
+				{
+					this.gamePieces.add (new Rook (PieceColor.BLACK, new Coord (i)));
+					break;
+				}
+				case 'q':
+				{
+					this.gamePieces.add (new Queen (PieceColor.WHITE, new Coord (i)));
+					break;
+				}
+				case 'Q':
+				{
+					this.gamePieces.add (new Queen (PieceColor.BLACK, new Coord (i)));
+					break;
+				}
+				case 'k':
+				{
+					this.gamePieces.add (new King (PieceColor.WHITE, new Coord (i)));
+					break;
+				}
+				case 'K':
+				{
+					this.gamePieces.add (new King (PieceColor.BLACK, new Coord (i)));
+					break;
+				}
+				default: break;
+			}
+			
+		}
 	}
 }

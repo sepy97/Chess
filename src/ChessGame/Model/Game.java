@@ -1,6 +1,8 @@
 package ChessGame.Model;
 
-public class Game
+import java.io.Serializable;
+
+public class Game implements Serializable
 {
 	public Board gameBoard;
 	String player1;
@@ -14,31 +16,26 @@ public class Game
 		//chessNotation = "Game of " + player1 + " vs " + player2 + " ";
 	}
 	
-	public void enterGameLoop (int currentPlayer)
-	{
-		boolean checkmate = false;
-		boolean stalemate = false;
-		
-		do {
-			
-			Move tm;// = new Move ();
-			/*boolean success = this.gameBoard.makeMove (tm);
-			if (success)
-			{
-				currentPlayer = (currentPlayer+1)%2;
-				checkmate = gameBoard.isCheckmate ();
-				stalemate = gameBoard.isStalemate ();
-			}*/
-		} while (!checkmate && !stalemate);
-	}
-	
 	@Override
 	public String toString ()
 	{
 		String result = "";
-		result += player1 + "\n";
-		result += player2 + "\n";
+		//result += player1 + "\n";
+		//result += player2 + "\n";
 		result += gameBoard.toString ();
 		return result;
+	}
+	
+	public void loadFromString (String inp)
+	{
+		this.gameBoard.loadFromString (inp);
+	}
+	
+	public void loadObject (Object readObject)
+	{
+		//this = (Game) readObject;
+		this.gameBoard = ((Game) readObject).gameBoard;
+		this.player1 = ((Game) readObject).player1;
+		this.player2 = ((Game) readObject).player2;
 	}
 }

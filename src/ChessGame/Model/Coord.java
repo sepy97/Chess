@@ -1,8 +1,9 @@
 package ChessGame.Model;
 
 import java.awt.*;
+import java.io.Serializable;
 
-public class Coord
+public class Coord implements Serializable
 {
 	private Point body;
 	

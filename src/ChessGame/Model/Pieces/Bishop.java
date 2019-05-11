@@ -2,9 +2,10 @@ package ChessGame.Model.Pieces;
 
 import ChessGame.Model.*;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Bishop extends Piece
+public class Bishop extends Piece //implements Serializable
 {
 	
 	public Bishop (PieceColor color, Coord coord)

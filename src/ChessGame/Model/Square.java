@@ -1,6 +1,8 @@
 package ChessGame.Model;
 
-public class Square
+import java.io.Serializable;
+
+public class Square implements Serializable
 {
 	private Coord coord;
 	
