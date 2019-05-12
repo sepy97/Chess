@@ -1,3 +1,5 @@
+package ChessGame.Controller;
+
 import ChessGame.Model.Coord;
 import ChessGame.Model.Game;
 import ChessGame.Model.Move;
@@ -10,8 +12,8 @@ import java.awt.event.MouseEvent;
 
 public class Controller
 {
-	private Game model;
-	private GameView view;
+	public Game model;
+	public GameView view;
 	
 	public Controller (Game model, GameView view)
 	{
@@ -22,10 +24,18 @@ public class Controller
 	public void StartGame ()
 	{
 		model = new Game ("player1", "player2");
+		view = new GameView (model);
+		//this = new Controller (model, view);
 	}
 	
+	public static void main (String[] s)
+	{
+		Game game = new Game ("player1", "player2");
+		GameView gameview = new GameView (game);
+		Controller chessgame = new Controller (game, gameview);
+	}
 	
-	class MListener extends MouseAdapter
+	public static class MListener extends MouseAdapter
 	{
 		BoardView curView;
 		
