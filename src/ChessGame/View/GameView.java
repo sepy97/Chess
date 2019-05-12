@@ -17,6 +17,7 @@ public class GameView
 	public Button newGameBut;
 	public Button loadGameBut;
 	public Button saveGameBut;
+	public Button connectBut;
 	
 	
 	public GameView (Game thisGame)
@@ -38,22 +39,27 @@ public class GameView
 		newGameBut  = new Button ();
 		loadGameBut = new Button ();
 		saveGameBut = new Button ();
+		connectBut  = new Button ();
 		
 		gameWindow.add (newGameBut);
 		gameWindow.add (loadGameBut);
 		gameWindow.add (saveGameBut);
+		gameWindow.add (connectBut);
 		
 		newGameBut.setSize  (100, 50);
 		loadGameBut.setSize (100, 50);
 		saveGameBut.setSize (100, 50);
+		connectBut.setSize  (100, 50);
 		
 		newGameBut.setLocation  (660, 60);
 		loadGameBut.setLocation (660, 120);
 		saveGameBut.setLocation (660, 180);
+		connectBut.setLocation  (660, 240);
 		
 		newGameBut.setLabel  ("New Game");
 		loadGameBut.setLabel ("Load Game");
 		saveGameBut.setLabel ("Save Game");
+		connectBut.setLabel  ("Connect");
 		
 		newGameBut.addActionListener (
 				new ActionListener ()
