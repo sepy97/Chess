@@ -7,6 +7,8 @@ import ChessGame.View.BoardView;
 import ChessGame.View.GameView;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -15,18 +17,26 @@ public class Controller
 	public Game model;
 	public GameView view;
 	
+	public void startGame ()
+	{
+		model = new Game ("player1", "player2");
+		view.chessBoard.update (model.gameBoard);
+		//view = new GameView (model);
+		//this = new Controller (model, view);
+	}
+	
+	
 	public Controller (Game model, GameView view)
 	{
 		this.model = model;
 		this.view = view;
+		
+		MListener mL = new MListener (view.chessBoard);
+		view.chessBoard.addMouseListener (mL);
+		
+		this.view.newGameBut.addActionListener (new ButtonListener());
 	}
 	
-	public void StartGame ()
-	{
-		model = new Game ("player1", "player2");
-		view = new GameView (model);
-		//this = new Controller (model, view);
-	}
 	
 	public static void main (String[] s)
 	{
@@ -42,6 +52,7 @@ public class Controller
 		public MListener (BoardView thisView)
 		{
 			curView = thisView;
+			
 		}
 		
 		public void mouseReleased (MouseEvent e)
@@ -55,7 +66,13 @@ public class Controller
 					new Thread(new Runnable(){
 						public void run(){
 							//Your Listener code
+							
+							
+							
+							
+							
 							Graphics g = curView.getGraphics ();
+							
 							if (curView.isMouseClicked)
 							{
 								curView.to = e.getPoint ();
@@ -63,16 +80,12 @@ public class Controller
 								int fromY = (curView.from.y - 50) / 60;
 								int toX = (curView.to.x - 20) / 60;
 								int toY = (curView.to.y - 50) / 60;
-							/*if ( (fromY+9*fromX) % 2 == 0) g.setColor (Color.lightGray);
-							else g.setColor (Color.darkGray);
-							g.drawRect (20 + fromX * 60, 50 + fromY * 60, 60, 60);
-							g.fillRect (20 + fromX * 60, 50 + fromY * 60, 60, 60);*/
-								curView.modelBoard.makeMove (new Move (new Coord (fromX, fromY), new Coord (toX, toY)));
-								curView.repaint ();// .drawPieces (curView.modelBoard, g);
+								
+								boolean correctMove = curView.modelBoard.makeMove (new Move (new Coord (fromX, fromY), new Coord (toX, toY)));
+								curView.repaint ();
 								curView.isMouseClicked = false;
 								
-								//if (curView.modelBoard.hasCheck (PieceColor.WHITE)) System.out.println ("White are checked!");
-								//if (curView.modelBoard.hasCheck (PieceColor.BLACK)) System.out.println ("Black are checked!");
+								
 							}
 							else {
 								g.setColor (Color.green);
@@ -83,9 +96,13 @@ public class Controller
 								{
 									g.drawRect (20 + fromX * 60, 50 + fromY * 60, 60, 60);
 									curView.isMouseClicked = true;
-									//curView.drawPieces (curView.modelBoard, g);
 								}
 							}
+							
+							
+							
+							
+							
 						}
 					}).start();
 					
@@ -101,4 +118,24 @@ public class Controller
 			downer = true;
 		}
 	}
+	
+	class ButtonListener implements ActionListener
+	{
+		
+		@Override
+		public void actionPerformed (ActionEvent e)
+		{
+			if (e.getSource () == view.newGameBut) {
+				System.out.println ("You clicked a newGame button!");
+				
+				startGame ();
+				//Здесь должна начинаться новая игра
+				
+				//view.chessBoard.update (model.gameBoard);// thisGame.gameBoard);
+				
+			}
+		}
+	}
+	
 }
+

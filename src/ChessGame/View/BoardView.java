@@ -34,8 +34,8 @@ public class BoardView extends Canvas
 	{
 		this.modelBoard = mB;
 		isMouseClicked = false;
-		Controller.MListener mL = new Controller.MListener (this);
-		this.addMouseListener (mL);
+		/*Controller.MListener mL = new Controller.MListener (this);
+		this.addMouseListener (mL);*/
 		
 		try {
 			WHITE_PAWN = ImageIO.read (getClass ().getResource ("/ChessGame/View/images/WHITE_PAWN.png"));

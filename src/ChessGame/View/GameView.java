@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class GameView
 {
 	private Frame gameWindow;
-	private BoardView chessBoard;
+	public BoardView chessBoard;
 	
 	public Button newGameBut;
 	public Button loadGameBut;
@@ -61,7 +61,7 @@ public class GameView
 		saveGameBut.setLabel ("Save Game");
 		connectBut.setLabel  ("Connect");
 		
-		newGameBut.addActionListener (
+		/*newGameBut.addActionListener (
 				new ActionListener ()
 		{
 					@Override
@@ -73,7 +73,7 @@ public class GameView
 						
 						chessBoard.update (thisGame.gameBoard);
 					}
-		});
+		});*/
 		
 		loadGameBut.addActionListener(
 				new ActionListener()
@@ -106,8 +106,6 @@ public class GameView
 					e2.printStackTrace ();
 				}
 				
-				//chessBoard.repaint ();
-				//здесь нужно сохранить в filename game.toString()
 			}
 		});
 		
@@ -130,7 +128,7 @@ public class GameView
 				try {
 					ObjectOutputStream out = new ObjectOutputStream (new FileOutputStream (fileDialog.getFile ()));
 
-					out.writeObject (thisGame);//.toString ());
+					out.writeObject (thisGame);
 					
 					out.close ();
 				} catch (IOException e2) {
@@ -145,7 +143,7 @@ public class GameView
 	
 	public void update (Game toUpdate)
 	{
-		this.chessBoard.update (toUpdate.gameBoard);// = toUpdate.gameBoard;
+		this.chessBoard.update (toUpdate.gameBoard);
 	}
 	
 }
