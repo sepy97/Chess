@@ -2,7 +2,6 @@ package ChessGame.Model.Pieces;
 
 import ChessGame.Model.*;
 
-import java.io.Serializable;
 import java.util.*;
 
 public class King extends Piece //implements Serializable
@@ -74,14 +73,14 @@ public class King extends Piece //implements Serializable
 	{
 		if (this.getColor () == PieceColor.WHITE)
 		{
-			for (Move i: curBoard.getAllValidMoves (PieceColor.BLACK))
+			for (Move i: curBoard.getAllPossibleMoves (PieceColor.BLACK))
 			{
 				if (i.getDest ().equals (this.getCoord ())) return true;
 			}
 		}
 		else
 		{
-			for (Move i: curBoard.getAllValidMoves (PieceColor.WHITE))
+			for (Move i: curBoard.getAllPossibleMoves (PieceColor.WHITE))
 			{
 				if (i.getDest ().equals (this.getCoord ())) return true;
 			}

@@ -203,7 +203,7 @@ public class Board implements Serializable
 		return true;
 	}
 	
-	public HashSet <Move> getAllValidMoves (PieceColor color)
+	public HashSet <Move> getAllPossibleMoves (PieceColor color)
 	{
 		HashSet <Move> validMoves = new HashSet <Move> ();
 		for (Piece i:gamePieces)
@@ -211,6 +211,20 @@ public class Board implements Serializable
 			if (i.getColor () == color)
 			{
 				validMoves.addAll (i.getPossibleMoves (this));
+			}
+		}
+		
+		return validMoves;
+	}
+	
+	public HashSet <Move> getAllValidMoves (PieceColor color)
+	{
+		HashSet <Move> validMoves = new HashSet <Move> ();
+		for (Piece i:gamePieces)
+		{
+			if (i.getColor () == color)
+			{
+				validMoves.addAll (i.getValidMoves (this));
 			}
 		}
 		
@@ -235,21 +249,22 @@ public class Board implements Serializable
 		return false;
 	}
 	
-	public boolean checkMated (PieceColor color)
+	public boolean checkMated (/*PieceColor color*/)
 	{
-		if (hasCheck (color) )
+		if (hasCheck (current) )
 		{
-			HashSet <Move> validMoves = getAllValidMoves (color);
+			HashSet <Move> validMoves = getAllValidMoves (current);
+			
 			return validMoves.isEmpty ();
 		}
 		return false;
 	}
 	
-	public boolean staleMated (PieceColor color)
+	public boolean staleMated (/*PieceColor color*/)
 	{
-		if (!hasCheck (color))
+		if (!hasCheck (current))
 		{
-			HashSet <Move> validMoves = getAllValidMoves (color);
+			HashSet <Move> validMoves = getAllValidMoves (current);
 			return validMoves.isEmpty ();
 		}
 		return false;

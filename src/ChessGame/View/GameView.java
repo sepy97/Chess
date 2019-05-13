@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class GameView
 {
-	private Frame gameWindow;
+	public Frame gameWindow;
 	public BoardView chessBoard;
 	
 	public Button newGameBut;
@@ -73,7 +73,7 @@ public class GameView
 						
 						chessBoard.update (thisGame.gameBoard);
 					}
-		});*/
+		});
 		
 		loadGameBut.addActionListener(
 				new ActionListener()
@@ -100,10 +100,8 @@ public class GameView
 					chessBoard.update (thisGame.gameBoard);
 					
 					in.close ();
-				} catch (IOException e2) {
-					e2.printStackTrace ();
-				} catch (ClassNotFoundException e2) {
-					e2.printStackTrace ();
+				} catch (IOException | ClassNotFoundException e1) {
+					e1.printStackTrace ();
 				}
 				
 			}
@@ -136,7 +134,7 @@ public class GameView
 				}
 				
 			}
-		});
+		});*/
 		
 		System.out.println (thisGame.toString ());
 	}
@@ -144,6 +142,32 @@ public class GameView
 	public void update (Game toUpdate)
 	{
 		this.chessBoard.update (toUpdate.gameBoard);
+		
+		if (toUpdate.gameBoard.staleMated ())
+		{
+			//show dialog that informs about stalemate
+			Dialog stlmt = new Dialog (this.gameWindow, "Stalemate", true);
+			stlmt.add (new Label ("Stalemate!", Label.CENTER));
+			WinListener thisWin = new WinListener (gameWindow);
+			stlmt.addWindowListener (new WinListener (gameWindow));
+			stlmt.setLocationRelativeTo (gameWindow);
+			stlmt.setLocation (50, 50);
+			stlmt.setSize (200, 100);
+			stlmt.setVisible (true);
+		}
+		
+		if (toUpdate.gameBoard.checkMated ())
+		{
+			//show dialog that informs about checkmate
+			Dialog chkmt = new Dialog (this.gameWindow, "Checkmate", true);
+			chkmt.add (new Label ("Checkmate!", Label.CENTER));
+			WinListener thisWin = new WinListener (gameWindow);
+			chkmt.addWindowListener (new WinListener (gameWindow));
+			chkmt.setLocationRelativeTo (gameWindow);
+			chkmt.setLocation (50, 50);
+			chkmt.setSize (200, 100);
+			chkmt.setVisible (true);
+		}
 	}
 	
 }
