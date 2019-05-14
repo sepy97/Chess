@@ -17,6 +17,19 @@ public class Coord implements Serializable
 		this.body = new Point (arrayIndex % 8, arrayIndex / 8);
 	}
 	
+	public Coord (String inp)
+	{
+		if (inp.length () > 3)
+		{
+			System.out.println ("Not correct coord STRING!!!!\n");
+			return;
+		}
+		
+		int fromX = (int) inp.charAt (0);
+		int fromY = (int) inp.charAt (2);
+		this.body = new Point (fromX, fromY);
+	}
+	
 	public int getX ()
 	{
 		return body.x;

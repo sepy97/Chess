@@ -11,6 +11,23 @@ public class Move
 		this.dest = dest;
 	}
 	
+	public Move (String inp)
+	{
+		if (inp.length () > 7)
+		{
+			System.out.println ("Not correct move STRING!!!!\n");
+			return;
+		}
+		
+		int fromX = (int) inp.charAt (0);
+		int fromY = (int) inp.charAt (2);
+		this.from = new Coord (fromX, fromY);
+		
+		int destX = (int) inp.charAt (4);
+		int destY = (int) inp.charAt (6);
+		this.dest = new Coord (destX, destY);
+	}
+	
 	public Coord getFrom ()
 	{
 		return this.from;
@@ -40,6 +57,16 @@ public class Move
 				this.dest.getY () == ((Move)obj).dest.getY () &&
 				obj instanceof Move;
 		
+		return result;
+	}
+	
+	@Override
+	public String toString ()
+	{
+		String result = "";
+		result += from.toString ();
+		result += " ";
+		result += dest.toString ();
 		return result;
 	}
 }

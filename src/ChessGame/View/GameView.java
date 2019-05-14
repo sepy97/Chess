@@ -148,8 +148,7 @@ public class GameView
 			//show dialog that informs about stalemate
 			Dialog stlmt = new Dialog (this.gameWindow, "Stalemate", true);
 			stlmt.add (new Label ("Stalemate!", Label.CENTER));
-			WinListener thisWin = new WinListener (gameWindow);
-			stlmt.addWindowListener (new WinListener (gameWindow));
+			stlmt.addWindowListener (new WinListener (stlmt));
 			stlmt.setLocationRelativeTo (gameWindow);
 			stlmt.setLocation (50, 50);
 			stlmt.setSize (200, 100);
@@ -161,8 +160,7 @@ public class GameView
 			//show dialog that informs about checkmate
 			Dialog chkmt = new Dialog (this.gameWindow, "Checkmate", true);
 			chkmt.add (new Label ("Checkmate!", Label.CENTER));
-			WinListener thisWin = new WinListener (gameWindow);
-			chkmt.addWindowListener (new WinListener (gameWindow));
+			chkmt.addWindowListener (new WinListener (chkmt));
 			chkmt.setLocationRelativeTo (gameWindow);
 			chkmt.setLocation (50, 50);
 			chkmt.setSize (200, 100);
@@ -170,6 +168,14 @@ public class GameView
 		}
 	}
 	
+	public boolean isOpened ()
+	{
+		if (gameWindow.isVisible ())
+		{
+			return true;
+		}
+		return false;
+	}
 }
 
 
@@ -212,6 +218,8 @@ class WinListener extends WindowAdapter //implements WindowListener
 	{
 		curWin.dispose ();
 	}
+	
+	
 }
 
 /*

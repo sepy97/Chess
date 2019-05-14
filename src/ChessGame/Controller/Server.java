@@ -1,5 +1,14 @@
 package ChessGame.Controller;
 
+
+import java.io.IOException;
+
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+
 import ChessGame.Model.*;
 import ChessGame.View.GameView;
 
@@ -9,23 +18,26 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
+import java.util.Arrays;
 
-public class Controller
+public class Server
 {
 	public Game model;
 	public GameView view;
 	
+	ServerSocket srvr;
+	Socket clnt;
+	
+	private InputStream sin;
+	private OutputStream sout;
 	
 	public void startGame ()
 	{
 		model = new Game ("player1", "player2");
 		view.chessBoard.update (model.gameBoard);
-		//view = new GameView (model);
-		//this = new Controller (model, view);
 	}
 	
-	
-	public Controller () //Game model, GameView view)
+	public Server () //Game model, GameView view)
 	{
 		this.model = new Game ("player1", "player2");// model;
 		this.view = new GameView (this.model);// view;
@@ -37,13 +49,37 @@ public class Controller
 		this.view.newGameBut.addActionListener  (bL);
 		this.view.saveGameBut.addActionListener (bL);
 		this.view.loadGameBut.addActionListener (bL);
+		
+		try {
+			srvr = new ServerSocket (6666);
+		} catch (IOException e) {
+			e.printStackTrace ();
+		}
+		
+		try {
+			clnt = srvr.accept ();
+		} catch (IOException e) {
+			e.printStackTrace ();
+		}
+		
+		try {
+			sin = clnt.getInputStream ();
+		} catch (IOException e) {
+			e.printStackTrace ();
+		}
+		
+		try {
+			sout = clnt.getOutputStream ();
+		} catch (IOException e) {
+			e.printStackTrace ();
+		}
+		
 	}
 	
 	
 	public static void main (String[] s)
 	{
-		Controller chessgame = new Controller ();
-		
+		Server chess = new Server ();
 	}
 	
 	public class MListener extends MouseAdapter
@@ -81,9 +117,13 @@ public class Controller
 								
 								boolean correctMove = model.gameBoard.makeMove (new Move (new Coord (fromX, fromY), new Coord (toX, toY)));;
 								//if (correctMove) return new Move (new Coord (fromX, fromY), new Coord (toX, toY))
-								
+								if (correctMove) sendMove (new Move (new Coord (fromX, fromY), new Coord (toX, toY)));
 								view.update (model);
 								view.chessBoard.isMouseClicked = false;
+								
+								Move toMake = recvMove ();
+								model.gameBoard.makeMove (toMake);
+								view.update (model);
 							}
 							else {
 								g.setColor (Color.green);
@@ -117,21 +157,32 @@ public class Controller
 		}
 	}
 	
-	/*class NetworkListener extends MListener
+	private void sendMove (Move move)
 	{
-		int portNumber;
-		private PieceColor playerColor;
-		Socket sendrecv;
-		
-		public NetworkListener (BoardView thisView)
-		{
-			//super (thisView);
-			portNumber = 9200;
-			playerColor = PieceColor.WHITE;
-			
-			
+		System.out.println ("sending move");
+		try {
+			sout.write (move.toString ().getBytes ());
+		} catch (IOException e) {
+			e.printStackTrace ();
 		}
-	}*/
+	}
+	
+	private Move recvMove ()
+	{
+		Move toRecv = null;// = new Move ();
+		try {
+			byte [] torecv = new byte[7];
+			sin.read (torecv);
+			String inp = new String (torecv);
+			toRecv = new Move (inp);
+		} catch (IOException e) {
+			e.printStackTrace ();
+		}
+		
+		return toRecv;
+	}
+	
+	
 	
 	class ButtonListener implements ActionListener
 	{
@@ -196,3 +247,29 @@ public class Controller
 	
 }
 
+
+
+/*
+public class Server
+{
+	
+	public Server ()
+	{
+		ctrl = new Controller ();
+		
+		
+	}
+	
+	public void startServer ()
+	{
+		while (ctrl.view.isOpened () )
+		{
+		
+		}
+	}
+	
+	public static void main (String[] s)
+	{
+	
+	}
+}*/
