@@ -69,6 +69,10 @@ public class Client
 		} catch (IOException e) {
 			e.printStackTrace ();
 		}
+		
+		Move tmp = this.recvMove ();
+		this.model.gameBoard.makeMove (tmp);
+		this.view.update (this.model);
 	}
 	
 	
@@ -76,9 +80,6 @@ public class Client
 	{
 		//Controller chessgame = new Controller (); //(game, gameview);
 		Client chess = new Client ();
-		Move tmp = chess.recvMove ();
-		chess.model.gameBoard.makeMove (tmp);
-		chess.view.update (chess.model);
 	}
 	
 	public class MListener extends MouseAdapter

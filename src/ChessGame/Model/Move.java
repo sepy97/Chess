@@ -19,12 +19,12 @@ public class Move
 			return;
 		}
 		
-		int fromX = (int) inp.charAt (0);
-		int fromY = (int) inp.charAt (2);
+		int fromX = (int) inp.charAt (0) - '0';
+		int fromY = (int) inp.charAt (2) - '0';
 		this.from = new Coord (fromX, fromY);
 		
-		int destX = (int) inp.charAt (4);
-		int destY = (int) inp.charAt (6);
+		int destX = (int) inp.charAt (4) - '0';
+		int destY = (int) inp.charAt (6) - '0';
 		this.dest = new Coord (destX, destY);
 	}
 	
