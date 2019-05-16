@@ -70,9 +70,11 @@ public class Client
 			e.printStackTrace ();
 		}
 		
+		this.view.chessBoard.setEnabled (false);
 		Move tmp = this.recvMove ();
 		this.model.gameBoard.makeMove (tmp);
 		this.view.update (this.model);
+		this.view.chessBoard.setEnabled (true);
 	}
 	
 	
@@ -121,9 +123,12 @@ public class Client
 								view.update (model);
 								view.chessBoard.isMouseClicked = false;
 								
+								view.chessBoard.setEnabled (false);
 								Move toMake = recvMove ();
 								model.gameBoard.makeMove (toMake);
 								view.update (model);
+								
+								view.chessBoard.setEnabled (true);
 							}
 							else {
 								g.setColor (Color.green);

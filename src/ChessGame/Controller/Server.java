@@ -121,9 +121,13 @@ public class Server
 								view.update (model);
 								view.chessBoard.isMouseClicked = false;
 								
+								view.chessBoard.setEnabled (false);
+								
 								Move toMake = recvMove ();
 								model.gameBoard.makeMove (toMake);
 								view.update (model);
+								
+								view.chessBoard.setEnabled (true);
 							}
 							else {
 								g.setColor (Color.green);
