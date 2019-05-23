@@ -39,27 +39,27 @@ public class GameView
 		newGameBut  = new Button ();
 		loadGameBut = new Button ();
 		saveGameBut = new Button ();
-		connectBut  = new Button ();
+		//connectBut  = new Button ();
 		
 		gameWindow.add (newGameBut);
 		gameWindow.add (loadGameBut);
 		gameWindow.add (saveGameBut);
-		gameWindow.add (connectBut);
+		//gameWindow.add (connectBut);
 		
 		newGameBut.setSize  (100, 50);
 		loadGameBut.setSize (100, 50);
 		saveGameBut.setSize (100, 50);
-		connectBut.setSize  (100, 50);
+		//connectBut.setSize  (100, 50);
 		
 		newGameBut.setLocation  (660, 60);
 		loadGameBut.setLocation (660, 120);
 		saveGameBut.setLocation (660, 180);
-		connectBut.setLocation  (660, 240);
+		//connectBut.setLocation  (660, 240);
 		
 		newGameBut.setLabel  ("New Game");
 		loadGameBut.setLabel ("Load Game");
 		saveGameBut.setLabel ("Save Game");
-		connectBut.setLabel  ("Connect");
+		//connectBut.setLabel  ("Connect");
 		
 		/*newGameBut.addActionListener (
 				new ActionListener ()
@@ -176,34 +176,16 @@ public class GameView
 		}
 		return false;
 	}
+	
+	public void paintSquare (int fromX, int fromY)
+	{
+		Graphics g = chessBoard.getGraphics ();
+		g.setColor (Color.green);                               ///выделить в функцию подсветки клетки VIEW
+		
+		g.drawRect (20 + fromX * 60, 50 + fromY * 60, 60, 60);
+	}
 }
 
-
-/*String outputFile = "/Users/sepy/Desktop/BOX.txt";
-				try {
-						ObjectOutputStream out = new ObjectOutputStream (new FileOutputStream (filename));
-      
-      
-      
-						out.writeObject (thisGame.toString ());
-						
-						out.close ();
-						} catch (IOException e2) {
-						e2.printStackTrace ();
-						}*/
-				
-	/*String inputFile = "/Users/sepy/Desktop/BOX.txt";
-				try {
-						ObjectInputStream in = new ObjectInputStream (new FileInputStream (inputFile));
-						
-						System.out.println (in.readObject ());
-						
-						
-						} catch (IOException e) {
-						e.printStackTrace ();
-						} catch (ClassNotFoundException e) {
-						e.printStackTrace ();
-						}*/
 
 class WinListener extends WindowAdapter //implements WindowListener
 {
@@ -221,66 +203,3 @@ class WinListener extends WindowAdapter //implements WindowListener
 	
 	
 }
-
-/*
-class MListener extends MouseAdapter
-{
-	BoardView curView;
-	
-	public MListener (BoardView thisView)
-	{
-		curView = thisView;
-	}
-	
-	public void mouseReleased (MouseEvent e)
-	{
-		if (downer) {
-			downer = false;
-			if (new Rectangle(e.getComponent().getLocationOnScreen(), e.getComponent().getSize())
-					.contains(e.getLocationOnScreen())) {
-				downer = false;
-				// CODE
-				new Thread(new Runnable(){
-					public void run(){
-						//Your Listener code
-						Graphics g = curView.getGraphics ();
-						if (curView.isMouseClicked)
-						{
-							curView.to = e.getPoint ();
-							int fromX = (curView.from.x - 20) / 60;
-							int fromY = (curView.from.y - 50) / 60;
-							int toX = (curView.to.x - 20) / 60;
-							int toY = (curView.to.y - 50) / 60;
-							
-							curView.modelBoard.makeMove (new Move (new Coord (fromX, fromY), new Coord (toX, toY)));
-							curView.repaint ();// .drawPieces (curView.modelBoard, g);
-							curView.isMouseClicked = false;
-							
-						}
-						else {
-							g.setColor (Color.green);
-							curView.from = e.getPoint ();
-							int fromX = (curView.from.x - 20) / 60;
-							int fromY = (curView.from.y - 50) / 60;
-							if (curView.modelBoard.isOccupied (new Coord (fromX, fromY)))
-							{
-								g.drawRect (20 + fromX * 60, 50 + fromY * 60, 60, 60);
-								curView.isMouseClicked = true;
-								//curView.drawPieces (curView.modelBoard, g);
-							}
-						}
-					}
-				}).start();
-				
-				/// COde
-			}
-		}
-	}
-	
-	boolean downer = false;
-	
-	public void mousePressed (MouseEvent e)
-	{
-		downer = true;
-	}
-}*/

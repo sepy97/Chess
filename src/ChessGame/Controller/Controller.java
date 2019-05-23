@@ -4,10 +4,7 @@ import ChessGame.Model.*;
 import ChessGame.View.GameView;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.*;
 
 public class Controller
@@ -37,6 +34,7 @@ public class Controller
 		this.view.newGameBut.addActionListener  (bL);
 		this.view.saveGameBut.addActionListener (bL);
 		this.view.loadGameBut.addActionListener (bL);
+		this.view.update (this.model);
 	}
 	
 	
@@ -68,9 +66,6 @@ public class Controller
 							
 							
 							
-							
-							Graphics g = view.chessBoard.getGraphics ();
-							
 							if (view.chessBoard.isMouseClicked)
 							{
 								view.chessBoard.to = e.getPoint ();
@@ -86,15 +81,15 @@ public class Controller
 								view.chessBoard.isMouseClicked = false;
 							}
 							else {
-								g.setColor (Color.green);
 								view.chessBoard.from = e.getPoint ();
 								int fromX = (view.chessBoard.from.x - 20) / 60;
 								int fromY = (view.chessBoard.from.y - 50) / 60;
 								if (model.gameBoard.isOccupied (new Coord (fromX, fromY)))
 								{
-									g.drawRect (20 + fromX * 60, 50 + fromY * 60, 60, 60);
-									view.chessBoard.isMouseClicked = true;
+									view.paintSquare (fromX, fromY);
 								}
+								view.chessBoard.isMouseClicked = true;
+								
 							}
 							
 							
@@ -116,22 +111,6 @@ public class Controller
 			downer = true;
 		}
 	}
-	
-	/*class NetworkListener extends MListener
-	{
-		int portNumber;
-		private PieceColor playerColor;
-		Socket sendrecv;
-		
-		public NetworkListener (BoardView thisView)
-		{
-			//super (thisView);
-			portNumber = 9200;
-			playerColor = PieceColor.WHITE;
-			
-			
-		}
-	}*/
 	
 	class ButtonListener implements ActionListener
 	{
@@ -162,7 +141,24 @@ public class Controller
 					out.writeObject (model);
 					
 					out.close ();
-				} catch (IOException e2) {
+				}
+				/*catch (InvalidClassException e1)
+				{
+					Dialog errorDialog = new Dialog (view.gameWindow, "ERROR", true);
+					errorDialog.add (new Label ("Object in file is not compatible!!!", Label.CENTER));
+					errorDialog.setLocationRelativeTo (view.gameWindow);
+					errorDialog.setLocation (150, 150);
+					errorDialog.setSize (400, 100);
+					errorDialog.addWindowListener (new WindowAdapter () {
+						
+						public void windowClosing (WindowEvent myEvent)
+						{
+							errorDialog.dispose ();
+						}
+					});
+					errorDialog.setVisible (true);
+				}*/
+				catch (IOException e2) {
 					e2.printStackTrace ();
 				}
 			}
@@ -187,7 +183,24 @@ public class Controller
 					view.update (model);
 					
 					in.close ();
-				} catch (IOException | ClassNotFoundException e1) {
+				}
+				catch (InvalidClassException e1)
+				{
+					Dialog errorDialog = new Dialog (view.gameWindow, "ERROR", true);
+					errorDialog.add (new Label ("Object in file is not compatible!!!", Label.CENTER));
+					errorDialog.addWindowListener (new WindowAdapter () {
+					
+					public void windowClosing (WindowEvent myEvent)
+					{
+						errorDialog.dispose ();
+					}
+					});
+					errorDialog.setLocationRelativeTo (view.gameWindow);
+					errorDialog.setLocation (50, 50);
+					errorDialog.setSize (400, 100);
+					errorDialog.setVisible (true);
+				}
+				catch (IOException | ClassNotFoundException e1) {
 					e1.printStackTrace ();
 				}
 			}
@@ -195,4 +208,5 @@ public class Controller
 	}
 	
 }
+
 
